@@ -1,0 +1,160 @@
+{
+  "version": 8,
+  "name": "hwkd Light",
+  "metadata": {
+    "hwkd:note": "Stil propriu hwkd, light mode. Culorile vin din AppColors (lib/core/app_colors.dart) — vezi docs/harta_paleta_culori.md. Stratul 'access-roads' e ascuns implicit: comută layout.visibility între 'none' și 'visible' din butonul de pe hartă.",
+    "hwkd:tokens": {
+      "background": "backgroundLight",
+      "water": "accent300 / accent500",
+      "forest": "forestLight / forestLight700",
+      "accessRoad": "accessRoad"
+    }
+  },
+  "glyphs": "https://tiles.openfreemap.org/fonts/{fontstack}/{range}.pbf",
+  "sources": {
+    "openfreemap": {
+      "type": "vector",
+      "url": "https://tiles.openfreemap.org/planet"
+    }
+  },
+  "layers": [
+    {
+      "id": "background",
+      "type": "background",
+      "paint": { "background-color": "#F3F2F2" }
+    },
+    {
+      "id": "landuse-residential",
+      "type": "fill",
+      "source": "openfreemap",
+      "source-layer": "landuse",
+      "filter": ["in", "class", "residential", "suburb", "neighbourhood"],
+      "paint": { "fill-color": "#EDEBEB" }
+    },
+    {
+      "id": "park",
+      "type": "fill",
+      "source": "openfreemap",
+      "source-layer": "park",
+      "paint": { "fill-color": "#DCE8D6" }
+    },
+    {
+      "id": "forest",
+      "type": "fill",
+      "source": "openfreemap",
+      "source-layer": "landcover",
+      "filter": ["in", "class", "wood", "forest", "grass", "scrub"],
+      "paint": {
+        "fill-color": [
+          "match", ["get", "class"],
+          "wood", "#C8DCC4",
+          "forest", "#C8DCC4",
+          "#DCE8D6"
+        ],
+        "fill-outline-color": "#8FAE86"
+      }
+    },
+    {
+      "id": "water",
+      "type": "fill",
+      "source": "openfreemap",
+      "source-layer": "water",
+      "paint": { "fill-color": "#99E0FF" }
+    },
+    {
+      "id": "water-outline",
+      "type": "line",
+      "source": "openfreemap",
+      "source-layer": "water",
+      "paint": { "line-color": "#38A6CF", "line-width": 1 }
+    },
+    {
+      "id": "waterway",
+      "type": "line",
+      "source": "openfreemap",
+      "source-layer": "waterway",
+      "paint": {
+        "line-color": "#38A6CF",
+        "line-width": ["interpolate", ["linear"], ["zoom"], 8, 0.6, 14, 2.4, 18, 6]
+      }
+    },
+    {
+      "id": "building",
+      "type": "fill",
+      "source": "openfreemap",
+      "source-layer": "building",
+      "minzoom": 14,
+      "paint": { "fill-color": "#E0DCDC" }
+    },
+    {
+      "id": "road-minor",
+      "type": "line",
+      "source": "openfreemap",
+      "source-layer": "transportation",
+      "filter": ["in", "class", "minor", "service", "residential"],
+      "paint": {
+        "line-color": "#EAE7E7",
+        "line-width": ["interpolate", ["linear"], ["zoom"], 12, 0.6, 16, 3, 20, 10]
+      }
+    },
+    {
+      "id": "road-major-casing",
+      "type": "line",
+      "source": "openfreemap",
+      "source-layer": "transportation",
+      "filter": ["in", "class", "motorway", "trunk", "primary", "secondary", "tertiary"],
+      "paint": {
+        "line-color": "#9B9797",
+        "line-width": ["interpolate", ["linear"], ["zoom"], 8, 1.6, 14, 6, 20, 20]
+      }
+    },
+    {
+      "id": "road-major",
+      "type": "line",
+      "source": "openfreemap",
+      "source-layer": "transportation",
+      "filter": ["in", "class", "motorway", "trunk", "primary", "secondary", "tertiary"],
+      "paint": {
+        "line-color": "#D7D3D3",
+        "line-width": ["interpolate", ["linear"], ["zoom"], 8, 0.8, 14, 4, 20, 16]
+      }
+    },
+    {
+      "id": "access-roads",
+      "type": "line",
+      "source": "openfreemap",
+      "source-layer": "transportation",
+      "filter": ["in", "class", "track", "path"],
+      "layout": { "visibility": "none", "line-cap": "round" },
+      "paint": {
+        "line-color": "#AA7B4F",
+        "line-width": ["interpolate", ["linear"], ["zoom"], 12, 1, 16, 2.4, 20, 5],
+        "line-dasharray": [2, 2]
+      }
+    },
+    {
+      "id": "place-label",
+      "type": "symbol",
+      "source": "openfreemap",
+      "source-layer": "place",
+      "layout": {
+        "text-field": ["get", "name"],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": ["interpolate", ["linear"], ["zoom"], 6, 10, 12, 14, 16, 18]
+      },
+      "paint": { "text-color": "#605D5D", "text-halo-color": "#F3F2F2", "text-halo-width": 1.4 }
+    },
+    {
+      "id": "water-label",
+      "type": "symbol",
+      "source": "openfreemap",
+      "source-layer": "water_name",
+      "layout": {
+        "text-field": ["get", "name"],
+        "text-font": ["Noto Sans Italic"],
+        "text-size": 12
+      },
+      "paint": { "text-color": "#1B7A9C", "text-halo-color": "#F3F2F2", "text-halo-width": 1.2 }
+    }
+  ]
+}
