@@ -1,0 +1,54 @@
+{
+  "version": 8,
+  "name": "hwkd Dark Labels",
+  "metadata": {
+    "hwkd:note": "Etichetele (nume localități/drumuri/ape) desprinse din hwkd-dark.json într-un strat propriu, randat DEASUPRA water_features (vezi map_screen.dart) — ca liniile de râu/pârâu să nu mai acopere numele localităților. Fără fundal, fără poligoane: doar cele 3 layer-e symbol."
+  },
+  "glyphs": "https://tiles.openfreemap.org/fonts/{fontstack}/{range}.pbf",
+  "sources": {
+    "openfreemap": {
+      "type": "vector",
+      "url": "https://tiles.openfreemap.org/planet"
+    }
+  },
+  "layers": [
+    {
+      "id": "road-label",
+      "type": "symbol",
+      "source": "openfreemap",
+      "source-layer": "transportation_name",
+      "minzoom": 13,
+      "layout": {
+        "symbol-placement": "line",
+        "text-field": ["get", "name"],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": 11
+      },
+      "paint": { "text-color": "#B0ACAC", "text-halo-color": "#2D2B2B", "text-halo-width": 1.2 }
+    },
+    {
+      "id": "place-label",
+      "type": "symbol",
+      "source": "openfreemap",
+      "source-layer": "place",
+      "layout": {
+        "text-field": ["get", "name"],
+        "text-font": ["Noto Sans Regular"],
+        "text-size": ["interpolate", ["linear"], ["zoom"], 6, 10, 12, 14, 16, 18]
+      },
+      "paint": { "text-color": "#BAB6B6", "text-halo-color": "#2D2B2B", "text-halo-width": 1.4 }
+    },
+    {
+      "id": "water-label",
+      "type": "symbol",
+      "source": "openfreemap",
+      "source-layer": "water_name",
+      "layout": {
+        "text-field": ["get", "name"],
+        "text-font": ["Noto Sans Italic"],
+        "text-size": 12
+      },
+      "paint": { "text-color": "#5FC2E0", "text-halo-color": "#2D2B2B", "text-halo-width": 1.2 }
+    }
+  ]
+}
